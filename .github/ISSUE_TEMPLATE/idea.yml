@@ -1,0 +1,34 @@
+name: TDA idea
+description: Capture an idea for the TDA system or one of its components
+title: ""
+labels:
+  - idea
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea
+      description: What would you like to change, add, or investigate?
+      placeholder: Describe the outcome you want and why it would be useful.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Choose the closest home; use Unknown for ideas that need triage.
+      options:
+        - TDA system or cross-project
+        - Website or visuals
+        - Chataigne
+        - Oxi scripts
+        - Unknown
+    validations:
+      required: true
+
+  - type: textarea
+    id: done
+    attributes:
+      label: What would done look like?
+      description: Add any acceptance criteria, constraints, or checks you already know.
