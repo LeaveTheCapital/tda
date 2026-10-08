@@ -31,47 +31,26 @@ flowchart LR
         IKARIE -->|stereo| FX_AID
     end
 
-    subgraph BESTIE["Bastl Bestie"]
-        BESTIE_IN1["Input 1 · Euro 1"]
-        BESTIE_IN2["Input 2 · Euro 2"]
-        BESTIE_IN3["Input 3 · normalled feedback"]
-        BESTIE_MIX["Stereo mix"]
-        BESTIE_IN1 --> BESTIE_MIX
-        BESTIE_IN2 --> BESTIE_MIX
-        BESTIE_IN3 -->|"performance feedback"| BESTIE_MIX
-    end
+    BESTIE["Bastl Bestie"]
+    BESTIE_FEEDBACK["Normalled feedback effect"]
+    ZOOM["Zoom LiveTrak L6"]
+    L6_SD["SD multitrack recording"]
 
-    subgraph ZOOM["Zoom LiveTrak L6"]
-        L6_CH1["Channel 1 · vocals"]
-        L6_CH5["Channel 5 · Bestie L/R"]
-        L6_CH6["Channel 6 · Tonverk L/R"]
-        L6_AUX1["Aux 1 · mono send"]
-        L6_MASTER["Master mix"]
-        L6_SD["SD multitrack recording"]
-        L6_USB["USB-C audio"]
-        L6_CH1 --> L6_MASTER
-        L6_CH5 --> L6_MASTER
-        L6_CH6 --> L6_MASTER
-        L6_CH1 -->|"mostly dry vocal send"| L6_AUX1
-        L6_CH1 --> L6_SD
-        L6_CH5 --> L6_SD
-        L6_CH6 --> L6_SD
-    end
-
-    SM7B["Shure SM7B"] -->|"XLR · mono"| L6_CH1
-    SEALEGS -->|"stereo · minijack"| BESTIE_IN1
-    FX_AID -->|"stereo · minijack"| BESTIE_IN2
-    BESTIE_MIX -->|"stereo TRS"| L6_CH5
-    TONVERK_AUDIO["Tonverk<br/>stereo master"] -->|"L/R"| L6_CH6
-    L6_AUX1 -->|"mono · vocal FX send"| TONVERK_INPUT["Tonverk<br/>routable input"]
+    SM7B["Shure SM7B"] -->|"XLR · mono"| ZOOM
+    SEALEGS -->|stereo| BESTIE
+    FX_AID -->|stereo| BESTIE
+    BESTIE_FEEDBACK --> BESTIE
+    BESTIE -->|stereo| ZOOM
+    TONVERK_AUDIO["Tonverk<br/>stereo master"] -->|stereo| ZOOM
+    ZOOM -->|"mono · vocal FX send"| TONVERK_INPUT["Tonverk<br/>routable input"]
     TONVERK_INPUT --> TONVERK_AUDIO
-    L6_USB -.->|"possible audio input"| PI_AUDIO["Raspberry Pi<br/>audio processing / speech-to-text"]
+    ZOOM --> L6_SD
+    ZOOM -.->|"possible USB audio"| PI_AUDIO["Raspberry Pi<br/>audio processing / speech-to-text"]
 ```
 
-Unused Zoom L6 inputs are channel 2 (mono XLR/jack), channel 3 (stereo), and
-channel 4 (stereo). The Bestie input 3 feedback path is musically useful but
-changes the overall gain, so a repeatable way to control its level remains an
-open performance-design problem.
+Exact mixer-channel assignments remain in the source notes. The Bestie feedback
+path is musically useful but changes the overall gain, so a repeatable way to
+control its level remains an open performance-design problem.
 
 ## MIDI, clock, control, and visuals
 
@@ -84,6 +63,7 @@ flowchart LR
         GAMEPAD["Gamepad / Wii controller"]
     end
 
+    CME_U6["CME U6 MIDI Pro<br/>3 MIDI in · 3 MIDI out"]
     TONVERK["Tonverk<br/>brain + master clock"]
 
     subgraph EURO_CONTROL["Eurorack control"]
@@ -117,16 +97,17 @@ flowchart LR
     KNOT["Intech Studio Knot<br/>USB MIDI host · TRS-A I/O"]
     L6_MIDI["Zoom L6<br/>TRS-A MIDI + USB MIDI"]
 
-    KEYBOARD -->|"play Tonverk voices"| TONVERK
-    MONOLIT -->|"MIDI CC · physical route TBD"| TONVERK
-    E16 -->|"MIDI CC / SysEx · physical route TBD"| TONVERK
+    KEYBOARD -->|"notes"| CME_U6
+    MONOLIT -->|"MIDI CC"| CME_U6
+    E16 -->|"MIDI CC / SysEx"| CME_U6
+    CME_U6 -->|"merged MIDI"| TONVERK
     TONVERK -->|"MIDI notes / CC / clock / transport"| UMIDI
     TONVERK -->|"DIN MIDI · split/routing TBD"| KENTON
 
     MONOLIT -.->|"optional USB MIDI"| KNOT
     E16 -.->|"optional USB MIDI"| KNOT
     GAMEPAD -.->|"optional USB host input"| KNOT
-    KNOT -.->|"TRS-A MIDI route TBD"| TONVERK
+    KNOT -.->|"alternative TRS-A MIDI route"| CME_U6
 
     MONOLIT -.->|"USB MIDI? · verify"| PI_MIDI
     E16 -.->|"USB MIDI"| PI_MIDI
@@ -138,13 +119,14 @@ flowchart LR
 
 | Device | Current or intended role |
 | --- | --- |
-| Tonverk | Central musical brain, sequencer, and master clock; receives keyboard notes and controller CC; provides stereo master audio |
+| CME U6 MIDI Pro | Merges the keyboard, Monolit, and E16 through three MIDI inputs before Tonverk; provides three MIDI outputs |
+| Tonverk | Central musical brain, sequencer, and master clock; receives merged keyboard notes and controller CC from the CME U6; provides stereo master audio |
 | Lightreft Monolit | Performance MIDI controller; intended to control Tonverk and potentially host a gamepad |
 | Oxi E16 | Performance MIDI controller and Lua-capable translator for CC and SysEx |
 | Kenton Pro Solo MkII | Converts MIDI clock to stable PPQN clock CV for Euro 2; spare aux outputs may later provide standardised CC-to-CV modulation |
 | Intellijel uMidi | Converts Tonverk MIDI to pitch, gate, clock, modulation, and reset signals for Euro 1 and Euro 2 |
-| Euro 1 | Atlantix mono voice through Sealegs stereo delay into Bestie input 1 |
-| Euro 2 | Ezeptocore through mixer, Ikarie, and FX Aid into Bestie input 2 |
+| Euro 1 | Atlantix mono voice through Sealegs stereo delay into Bestie |
+| Euro 2 | Ezeptocore through mixer, Ikarie, and FX Aid into Bestie |
 | Bastl Bestie | Performance submixer for both Eurorack voices and its normalled feedback effect |
 | Zoom L6 | Main mixer, vocal input, stereo returns from Bestie and Tonverk, optional multitrack recorder, and possible Pi audio/MIDI interface |
 | Raspberry Pi | Runs Chataigne and browser visuals; outputs HDMI; potential audio analysis, speech-to-text, and lighting control host |
@@ -152,8 +134,8 @@ flowchart LR
 
 ## Decisions and verification still needed
 
-1. Define the physical MIDI merge/split path that lets the keyboard, Monolit,
-   and E16 reach Tonverk while Tonverk drives both uMidi and the Kenton.
+1. Confirm the CME U6 input/output assignments and define how Tonverk's output
+   is split or routed to both uMidi and the Kenton.
 2. Identify the installed Intellijel uMidi hardware/firmware version and the
    applicable updater or configuration application.
 3. Verify that Tonverk's MIDI transport-start message reliably produces the
