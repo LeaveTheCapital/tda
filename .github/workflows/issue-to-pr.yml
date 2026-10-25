@@ -20,9 +20,12 @@ jobs:
        (github.event.comment.body == '/agent' ||
         startsWith(github.event.comment.body, '/agent ')))
     permissions:
+      actions: read
+      checks: read
       contents: write
       issues: write
       pull-requests: write
     uses: LeaveTheCapital/agent-workflows/.github/workflows/issue-to-pr.yml@main
     secrets:
       OPEN_API_KEY_SECRET: ${{ secrets.OPEN_API_KEY_SECRET }}
+      AGENT_GITHUB_TOKEN: ${{ secrets.AGENT_GITHUB_TOKEN }}
