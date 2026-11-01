@@ -1,15 +1,16 @@
 # Audio and MIDI connections
 
-Status: working draft derived from the notes captured on 8 October 2026.
+Status: working draft derived from the notes captured on 8 October 2026, with
+MIDI wiring updated on 28 October 2026.
 
 This document is the canonical overview of audio, MIDI, clock, control, and
 visual routing in the TDA live setup. The untouched input is preserved in
 [the dated source notes](source-notes/audio-midi-2026-10-08.txt).
 
-Solid arrows below represent current wiring or a stated requirement. Dotted
-arrows represent proposed, optional, or unverified paths. A solid arrow can
-still have an explicit verification note where the physical connection is
-known but its behaviour needs testing.
+Solid lines and arrows below represent current wiring or a stated requirement.
+Dotted arrows represent proposed, optional, or unverified paths. A solid
+connection can still have an explicit verification note where the physical
+connection is known but its behaviour needs testing.
 
 ## Audio routing
 
@@ -58,13 +59,13 @@ control its level remains an open performance-design problem.
 flowchart LR
     subgraph CONTROLLERS["Performance controllers"]
         KEYBOARD["MIDI keyboard"]
-        MONOLIT["Lightreft Monolit<br/>TRS-A MIDI / USB host"]
-        E16["Oxi E16<br/>TRS-A MIDI / USB / Lua"]
+        MONOLIT["Lightreft Monolit"]
+        E16["Oxi E16"]
         GAMEPAD["Gamepad / Wii controller"]
     end
 
-    CME_U6["CME U6 MIDI Pro<br/>3 MIDI in · 3 MIDI out"]
     TONVERK["Tonverk<br/>brain + master clock"]
+    TR6S["Roland TR-6S"]
 
     subgraph EURO_CONTROL["Eurorack control"]
         UMIDI["Intellijel uMidi<br/>Euro 1"]
@@ -81,7 +82,7 @@ flowchart LR
     end
 
     subgraph PI["Raspberry Pi"]
-        PI_MIDI["USB MIDI input"]
+        PI_MIDI["USB MIDI"]
         CHATAIGNE["Chataigne"]
         VISUALS["HTML / JavaScript visuals"]
         LIGHTING["Lighting / LED control"]
@@ -94,24 +95,14 @@ flowchart LR
         VISUALS --> HDMI
     end
 
-    KNOT["Intech Studio Knot<br/>USB MIDI host · TRS-A I/O"]
-    L6_MIDI["Zoom L6<br/>TRS-A MIDI + USB MIDI"]
-
-    KEYBOARD -->|"notes"| CME_U6
-    MONOLIT -->|"MIDI CC"| CME_U6
-    E16 -->|"MIDI CC / SysEx"| CME_U6
-    CME_U6 -->|"merged MIDI"| TONVERK
+    KEYBOARD -->|"DIN MIDI input"| TONVERK
+    MONOLIT -->|"TRS MIDI out → TRS MIDI in"| E16
+    E16 -->|"USB MIDI"| PI_MIDI
+    TONVERK ---|"USB MIDI"| PI_MIDI
+    TR6S ---|"USB MIDI"| PI_MIDI
     TONVERK -->|"MIDI notes / CC / clock / transport"| UMIDI
     TONVERK -->|"DIN MIDI · split/routing TBD"| KENTON
 
-    MONOLIT -.->|"optional USB MIDI"| KNOT
-    E16 -.->|"optional USB MIDI"| KNOT
-    GAMEPAD -.->|"optional USB host input"| KNOT
-    KNOT -.->|"alternative TRS-A MIDI route"| CME_U6
-
-    MONOLIT -.->|"USB MIDI? · verify"| PI_MIDI
-    E16 -.->|"USB MIDI"| PI_MIDI
-    L6_MIDI -.->|"USB MIDI route · verify"| PI_MIDI
     GAMEPAD -.->|"keyboard / mouse / gamepad events"| CHATAIGNE
 ```
 
@@ -119,36 +110,32 @@ flowchart LR
 
 | Device | Current or intended role |
 | --- | --- |
-| CME U6 MIDI Pro | Merges the keyboard, Monolit, and E16 through three MIDI inputs before Tonverk; provides three MIDI outputs |
-| Tonverk | Central musical brain, sequencer, and master clock; receives merged keyboard notes and controller CC from the CME U6; provides stereo master audio |
-| Lightreft Monolit | Performance MIDI controller; intended to control Tonverk and potentially host a gamepad |
-| Oxi E16 | Performance MIDI controller and Lua-capable translator for CC and SysEx |
+| Tonverk | Central musical brain, sequencer, and master clock; receives the MIDI keyboard through its hardware DIN input and connects to the Raspberry Pi by USB MIDI; provides stereo master audio |
+| Lightreft Monolit | Performance MIDI controller; TRS MIDI output connects to the Oxi E16 input |
+| Oxi E16 | Performance MIDI controller and Lua-capable translator for CC and SysEx; receives Monolit TRS MIDI and connects to the Raspberry Pi by USB MIDI |
+| Roland TR-6S | Connects to the Raspberry Pi by USB MIDI |
 | Kenton Pro Solo MkII | Converts MIDI clock to stable PPQN clock CV for Euro 2; spare aux outputs may later provide standardised CC-to-CV modulation |
 | Intellijel uMidi | Converts Tonverk MIDI to pitch, gate, clock, modulation, and reset signals for Euro 1 and Euro 2 |
 | Euro 1 | Atlantix mono voice through Sealegs stereo delay into Bestie |
 | Euro 2 | Ezeptocore through mixer, Ikarie, and FX Aid into Bestie |
 | Bastl Bestie | Performance submixer for both Eurorack voices and its normalled feedback effect |
-| Zoom L6 | Main mixer, vocal input, stereo returns from Bestie and Tonverk, optional multitrack recorder, and possible Pi audio/MIDI interface |
-| Raspberry Pi | Runs Chataigne and browser visuals; outputs HDMI; potential audio analysis, speech-to-text, and lighting control host |
-| Intech Studio Knot | Optional USB MIDI host and TRS-A routing utility |
+| Zoom L6 | Main mixer, vocal input, stereo returns from Bestie and Tonverk, optional multitrack recorder, and possible Pi audio interface |
+| Raspberry Pi | USB MIDI host for E16, Tonverk, and TR-6S; runs Chataigne and browser visuals; outputs HDMI; potential audio analysis, speech-to-text, and lighting control host |
 
 ## Decisions and verification still needed
 
-1. Confirm the CME U6 input/output assignments and define how Tonverk's output
-   is split or routed to both uMidi and the Kenton.
+1. Define how Tonverk's MIDI output is split or routed to both uMidi and the
+   Kenton.
 2. Identify the installed Intellijel uMidi hardware/firmware version and the
    applicable updater or configuration application.
 3. Verify that Tonverk's MIDI transport-start message reliably produces the
    intended reset CV from uMidi to Ezeptocore.
 4. Record the Kenton clock division/PPQN setting and confirm whether the clock
    output described as `clock CV out` and `Aux 1` is the same configured output.
-5. Confirm Zoom L6 USB audio and MIDI capabilities in the intended Raspberry Pi
+5. Confirm Zoom L6 USB audio capabilities in the intended Raspberry Pi
    operating mode, including the available channel count.
-6. Choose the Raspberry Pi's primary USB MIDI source and determine whether a
-   powered hub or the Knot is required.
-7. Verify whether Monolit's USB-C port carries MIDI and decide whether its USB-A
-   host port or the Knot should host game controllers.
-8. Decide how Chataigne communicates with the browser visuals and lighting
+6. Verify how MIDI from the Monolit passes through the E16 to the Raspberry Pi.
+7. Decide how Chataigne communicates with the browser visuals and lighting
    system: MIDI, OSC, WebSocket, standard lighting protocols, or a combination.
-9. Design a repeatable gain strategy for the Bestie feedback effect and the
+8. Design a repeatable gain strategy for the Bestie feedback effect and the
    Zoom L6 vocal-to-Tonverk effects loop.
