@@ -1,0 +1,5 @@
+Currently I am not using Chataigne at all. I'm using the Alsa midi router stuff
+built into the raspberry pi to handle all the USB midi routing. Is any of the
+proposed solution possible with this alone or not
+I use a script that runs on boot and polls to keep all connections up to date.
+I can't remember if I documented this in this repo already or not?

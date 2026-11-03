@@ -1,0 +1,8 @@
+I have a problem to solve. I want to have my tr6s change patterns when my
+convert changes songs. I want this to be as automated as possible, but the
+Tonverk only sends program change messages when it changes patterns which is
+too frequent or by sending them via a p lock from a midi machine, either one
+results in the sync getting messed up. Haven't tried with patter change over
+din midi but assuming similar result.
+
+Correction: tonverk not convert

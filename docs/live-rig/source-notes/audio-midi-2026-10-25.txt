@@ -1,0 +1,6 @@
+I have Tonverk connected to pi by USB. I have oxi e16 connected to pi by USB.
+I have Roland tr6s connected to pi by USB. The oxi has a TRS midi out which
+goes to the Kenton Pro solo and that goes to the clock of the ezeptocore and it
+also goes to the midi in of the intellijel midi 1u modular
+
+Correction: no, its thw thru output of the kenton

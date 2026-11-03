@@ -11,6 +11,7 @@ parts form the complete live system.
 ## Live system
 
 - [Audio and MIDI connections](docs/live-rig/audio-midi.md)
+- [Tonverk song changes and TR-6S pattern selection](docs/live-rig/tonverk-tr6s-song-pattern-sync.md)
 - [Repository responsibilities](docs/architecture.md)
 
 ## Component repositories
@@ -19,7 +20,8 @@ parts form the complete live system.
 | --- | --- |
 | [TDAwebsite](https://github.com/LeaveTheCapital/TDAwebsite) | Browser-based TDA website and live visuals |
 | [tda-chataigne](https://github.com/LeaveTheCapital/tda-chataigne) | Chataigne modules, mappings, scripts, and show configuration |
-| [oxi-e16-lua-scripts](https://github.com/LeaveTheCapital/oxi-e16-lua-scripts) | Oxi Instruments Lua scripts and device integration |
+| [oxi-e16-lua-scripts](https://github.com/LeaveTheCapital/oxi-e16-lua-scripts) | Oxi E16 Lua processing, including TR-6S CC-to-SysEx translation |
+| [pi-midi-router](https://github.com/LeaveTheCapital/pi-midi-router) | Raspberry Pi ALSA USB MIDI routing and boot service |
 
 Shared repository automation is maintained separately in
 [agent-workflows](https://github.com/LeaveTheCapital/agent-workflows).

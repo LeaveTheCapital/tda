@@ -10,6 +10,7 @@ project-level documentation repository.
 | Browser visuals and website code | `TDAwebsite` |
 | Chataigne modules and show mappings | `tda-chataigne` |
 | Oxi Lua scripts | `oxi-e16-lua-scripts` |
+| Raspberry Pi ALSA USB MIDI routing | `pi-midi-router` |
 | Reusable issue-to-PR automation | `agent-workflows` |
 
 When a change crosses repositories, document the system-level decision here
