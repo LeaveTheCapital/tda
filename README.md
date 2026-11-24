@@ -10,6 +10,7 @@ parts form the complete live system.
 
 ## Live system
 
+- [System map and change impact](map/AGENTS.md)
 - [Audio and MIDI connections](docs/live-rig/audio-midi.md)
 - [Tonverk song changes and TR-6S pattern selection](docs/live-rig/tonverk-tr6s-song-pattern-sync.md)
 - [Repository responsibilities](docs/architecture.md)

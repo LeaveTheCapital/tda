@@ -7,6 +7,10 @@
 - Keep implementation code and device-specific configuration in the linked
   component repositories unless a change genuinely belongs at system level.
 
+## Find your task
+
+- For live-rig orientation and change impact, start at [the system map](map/AGENTS.md).
+
 ## Documentation
 
 - Preserve original source notes when turning them into structured documents.
