@@ -21,8 +21,8 @@ parts form the complete live system.
 | --- | --- |
 | [TDAwebsite](https://github.com/LeaveTheCapital/TDAwebsite) | Browser-based TDA website and live visuals |
 | [tda-chataigne](https://github.com/LeaveTheCapital/tda-chataigne) | Chataigne modules, mappings, scripts, and show configuration |
-| [oxi-e16-lua-scripts](https://github.com/LeaveTheCapital/oxi-e16-lua-scripts) | Oxi E16 Lua processing, including TR-6S CC-to-SysEx translation |
-| [pi-midi-router](https://github.com/LeaveTheCapital/pi-midi-router) | Raspberry Pi ALSA USB MIDI routing and boot service |
+| [oxi-e16-lua-scripts](https://github.com/LeaveTheCapital/oxi-e16-lua-scripts) | Oxi E16 Lua scripts for other device functions; the TR-6S translator is now on the Pi |
+| [pi-midi-router](https://github.com/LeaveTheCapital/pi-midi-router) | Raspberry Pi ALSA USB MIDI routing and Python TR-6S SysEx service |
 
 Shared repository automation is maintained separately in
 [agent-workflows](https://github.com/LeaveTheCapital/agent-workflows).
