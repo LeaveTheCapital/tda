@@ -9,13 +9,11 @@ newly confirmed wiring recorded in
 [the 25 October source notes](source-notes/audio-midi-2026-10-25.txt).
 The current Pi routing and TR-6S translation implementation is in the
 [Pi router repository](https://github.com/LeaveTheCapital/pi-midi-router).
-The [ALSA router note](source-notes/alsa-midi-router-2026-10-25.txt) and
-[E16 Lua note](source-notes/e16-lua-tr6s-routing-2026-10-25.txt) preserve the
-earlier setup.
+The [ALSA router note](source-notes/alsa-midi-router-2026-10-25.txt) preserves
+the earlier setup.
 
-The open design for changing TR-6S patterns once per Tonverk song is documented
-separately in
-[Tonverk song changes and TR-6S pattern selection](tonverk-tr6s-song-pattern-sync.md).
+See [Song transitions](tonverk-tr6s-song-pattern-sync.md) for the requirements
+across Tonverk, the Pi, and TDAwebsite.
 
 Solid lines and arrows below represent current wiring or a stated requirement.
 Dotted arrows represent proposed, optional, or unverified paths. A solid
@@ -141,8 +139,7 @@ subscriptions. The [Python TR-6S service](https://github.com/LeaveTheCapital/pi-
 translates selected MIDI CC, NRPN, and note messages to Roland DT1 SysEx.
 Its [parameter map](https://github.com/LeaveTheCapital/pi-midi-router/blob/main/tr6s-parameter-map.tsv)
 and [hardware test plan](https://github.com/LeaveTheCapital/pi-midi-router/blob/main/test-plan.md)
-live in the Pi repository. The earlier E16 TR-6S Lua translator is retired for
-this path; the Pi router defaults its E16 Lua autoload mode to off.
+live in the Pi repository.
 
 ## Device roles and current assignments
 
@@ -163,11 +160,11 @@ this path; the Pi router defaults its E16 Lua autoload mode to off.
 
 ## Decisions and verification still needed
 
-1. Confirm the installed Pi services, E16 Lua autoload setting, and live ALSA subscriptions with all three USB devices connected.
+1. Confirm the installed Pi services and live ALSA subscriptions with all three USB devices connected.
 2. Confirm the keyboard, Monolit, and CME U6 physical routes; the dated notes describe both direct and proposed merged routes.
 3. Test whether transport start through Intellijel MIDI 1U produces the intended Ezeptocore reset CV.
 4. Record Kenton clock division and whether the described clock CV output is Aux 1.
 5. Confirm Zoom L6 USB audio capabilities in the intended Pi mode.
-6. Test [Tonverk song cues and TR-6S pattern selection](tonverk-tr6s-song-pattern-sync.md), including the website's overlapping channel 10 note mapping.
+6. Test [song transitions](tonverk-tr6s-song-pattern-sync.md) across Tonverk, the TR-6S, and the offline browser.
 7. Decide whether Chataigne, lighting, or a browser bridge is needed for the performance.
 8. Design repeatable gain control for Bestie feedback and the L6 vocal effects loop.

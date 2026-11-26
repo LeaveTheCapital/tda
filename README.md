@@ -12,17 +12,17 @@ parts form the complete live system.
 
 - [System map and change impact](map/AGENTS.md)
 - [Audio and MIDI connections](docs/live-rig/audio-midi.md)
-- [Tonverk song changes and TR-6S pattern selection](docs/live-rig/tonverk-tr6s-song-pattern-sync.md)
+- [Song transitions](docs/live-rig/tonverk-tr6s-song-pattern-sync.md)
 - [Repository responsibilities](docs/architecture.md)
 
 ## Component repositories
 
 | Repository | Responsibility |
 | --- | --- |
-| [TDAwebsite](https://github.com/LeaveTheCapital/TDAwebsite) | Browser-based TDA website and live visuals |
+| [TDAwebsite](https://github.com/LeaveTheCapital/TDAwebsite) | Song catalogue and offline browser visuals |
 | [tda-chataigne](https://github.com/LeaveTheCapital/tda-chataigne) | Chataigne modules, mappings, scripts, and show configuration |
-| [oxi-e16-lua-scripts](https://github.com/LeaveTheCapital/oxi-e16-lua-scripts) | Oxi E16 Lua scripts for other device functions; the TR-6S translator is now on the Pi |
-| [pi-midi-router](https://github.com/LeaveTheCapital/pi-midi-router) | Raspberry Pi ALSA USB MIDI routing and Python TR-6S SysEx service |
+| [oxi-e16-lua-scripts](https://github.com/LeaveTheCapital/oxi-e16-lua-scripts) | Oxi E16 Lua scripts |
+| [pi-midi-router](https://github.com/LeaveTheCapital/pi-midi-router) | Local checkout `~/pimidi`, Raspberry Pi ALSA USB MIDI routing and Python TR-6S SysEx service |
 
 Shared repository automation is maintained separately in
 [agent-workflows](https://github.com/LeaveTheCapital/agent-workflows).

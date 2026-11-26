@@ -7,10 +7,10 @@ project-level documentation repository.
 | --- | --- |
 | End-to-end live-rig topology | `tda` |
 | Cross-project protocols and decisions | `tda` |
-| Browser visuals and website code | `TDAwebsite` |
+| Song catalogue, song IDs, and offline browser visuals | `TDAwebsite` |
 | Chataigne modules and show mappings | `tda-chataigne` |
-| Oxi Lua scripts for other functions | `oxi-e16-lua-scripts` |
-| Raspberry Pi ALSA USB MIDI routing and Python TR-6S translation | `pi-midi-router` |
+| Oxi E16 Lua scripts | `oxi-e16-lua-scripts` |
+| Raspberry Pi ALSA USB MIDI routing and Python TR-6S translation | `pi-midi-router` (local checkout `~/pimidi`) |
 | Reusable issue-to-PR automation | `agent-workflows` |
 
 When a change crosses repositories, document the system-level decision here

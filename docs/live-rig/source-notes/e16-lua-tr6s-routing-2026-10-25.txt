@@ -1,3 +1,5 @@
+Deprecated. This historical note describes the E16 Lua approach replaced by Python in pimidi.
+
 I also have Lua script running on the E16 which can do custom logic. Also, in
 between the Tonverke and the tr6s, is this Lua scripting documented in here? It
 is what I use to translate midi CC messages into tr6x sysx messages

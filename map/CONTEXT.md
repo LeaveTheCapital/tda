@@ -6,10 +6,10 @@ One job: route a proposed live-rig change to its owning source, immediate effect
 
 - Reference: `../docs/architecture.md` for repository ownership.
 - Reference: `../docs/live-rig/audio-midi.md` for system topology.
-- Reference: `../docs/live-rig/tonverk-tr6s-song-pattern-sync.md` for current Pi pattern selection, proposed song cue flow, and its test plan.
+- Reference: `../docs/live-rig/tonverk-tr6s-song-pattern-sync.md` for song boundary requirements, current MIDI behaviour, and rehearsal checks.
 - Evidence: `../docs/live-rig/source-notes/` for preserved observations and corrections.
 
-Read only the source relevant to the proposed change. Use the audio/MIDI overview and its dated notes to distinguish confirmed wiring from paths that still need verification. The Python bridge implements MIDI-controlled pattern selection; automatic Tonverk song cue mapping remains a proposal.
+Read only the source relevant to the proposed change. Use the audio/MIDI overview and its dated notes to distinguish confirmed wiring from paths that still need verification.
 
 ## Process
 
@@ -24,7 +24,7 @@ Read only the source relevant to the proposed change. Use the audio/MIDI overvie
 | --- | --- | --- |
 | Audio signal, mixer channel, or feedback path | [Audio routing](../docs/live-rig/audio-midi.md#audio-routing) | Adjacent device inputs and outputs in that diagram; the [dated notes](../docs/live-rig/source-notes/audio-midi-2026-10-08.txt) for channel assignments |
 | MIDI controller, USB subscription, clock, or transport route | [MIDI routing](../docs/live-rig/audio-midi.md#midi-clock-control-and-visuals) | [Pi router ownership](../docs/architecture.md) and the [ALSA note](../docs/live-rig/source-notes/alsa-midi-router-2026-10-25.txt); downstream TR-6S and Eurorack timing |
-| Tonverk song cue or TR-6S pattern selection | [Song change proposal](../docs/live-rig/tonverk-tr6s-song-pattern-sync.md) | [Python TR-6S bridge](https://github.com/LeaveTheCapital/pi-midi-router/tree/main/tr6s_sysex), Pi subscriptions, and the song cue test plan |
+| Song cue, TR-6S pattern selection, or song ID | [Song transitions](../docs/live-rig/tonverk-tr6s-song-pattern-sync.md) | Tonverk cue timing, Pi subscriptions, and the TDAwebsite song catalogue |
 | Visual or lighting control | [MIDI and visual routing](../docs/live-rig/audio-midi.md#midi-clock-control-and-visuals) | [Website and Chataigne ownership](../docs/architecture.md); confirm the bridge protocol before treating a dotted path as live |
 | Cross-repository decision | [Repository responsibilities](../docs/architecture.md) | The component repository that owns implementation and any affected path above |
 
